@@ -3,7 +3,7 @@ package Programmers.lv1;
 import java.util.Scanner;
 
 public class p120823 {
-    public static void main(String[] args) {
+    public void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
@@ -13,5 +13,7 @@ public class p120823 {
             }
             System.out.println();
         }
+
+
     }
 }
