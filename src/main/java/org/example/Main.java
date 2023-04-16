@@ -4,7 +4,7 @@ import Programmers.lv1.*;
 
 public class Main {
     public static void main(String[] args) {
-        p120834 sol = new p120834();
-        System.out.println(sol.solution(23));
+        p120815 sol = new p120815();
+        System.out.println(sol.solution(4));
     }
 }
