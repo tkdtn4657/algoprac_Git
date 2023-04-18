@@ -3,8 +3,10 @@ package org.example;
 import Baekjoon.p10026;
 import Programmers.lv1.*;
 
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        p120890 sol = new p120890();   //[PG] 스타일
 //        System.out.println(sol.solution(new int[] {3, 10, 28}, 20));
 
