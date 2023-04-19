@@ -1,7 +1,6 @@
 package org.example;
 
-import Baekjoon.p10026;
-import Programmers.lv1.*;
+import Baekjoon.gold.p10026;
 
 import java.io.IOException;
 
