@@ -50,16 +50,16 @@ public class p13023 {
     }
 
     static void DFS(int n, int depth) {
-        if (depth == 5) {
+        if (depth == 5 || isDepthFive == 1) {
             isDepthFive = 1;
             return;
         }
 
         visited[n] = true;
 
-        for (int i : A[n]) {
-            if (!visited[i]) {
-                DFS(i, depth + 1);
+        for (int i = 0; i < A[n].size(); i++) {
+            if (!visited[A[n].get(i)]) {
+                DFS(A[n].get(i), depth + 1);
             }
         }
 

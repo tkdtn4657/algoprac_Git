@@ -16,5 +16,7 @@ public class Main {
 
         p13023 solv = new p13023();//[BOJ] 스타일
         solv.main();
+
+
     }
 }
