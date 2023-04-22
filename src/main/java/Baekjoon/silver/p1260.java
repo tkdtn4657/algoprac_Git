@@ -8,7 +8,7 @@ public class p1260 {
     static boolean[] visited;
     static ArrayList<Integer>[] A;
 
-    static void main() {
+    public static void main() {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
@@ -46,9 +46,16 @@ public class p1260 {
     }
 
     static void DFS(int v){
+        if(visited[v]){
+            return;
+        }
+
+        visited[v] = true;
+        System.out.println(v);
 
         for(int i : A[v]) {
             if (!visited[i]) {
+
                 DFS(i);
             }
         }
