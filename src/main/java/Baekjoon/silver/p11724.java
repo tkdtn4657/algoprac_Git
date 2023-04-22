@@ -16,9 +16,9 @@ public class p11724 { // dfs구현
          // 각 노드별 인접리스트 저장
         A = new ArrayList[N + 1];
 
-        for (int i = 1; i < N+1; i++) { // 초기화작업
-            visited[i] = false;
-        }
+//        for (int i = 1; i < N+1; i++) { // 초기화작업
+//            visited[i] = false;
+//        }
 
         for(int i = 1; i < N + 1; i++){
             A[i] = new ArrayList<Integer>();

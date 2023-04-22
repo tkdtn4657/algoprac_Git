@@ -1,7 +1,9 @@
 package org.example;
 
 import Baekjoon.gold.p10026;
+import Baekjoon.gold.p2023;
 import Baekjoon.silver.p11724;
+import Baekjoon.silver.p1260;
 
 import java.io.IOException;
 
@@ -11,7 +13,7 @@ public class Main {
 //        System.out.println(sol.solution(new int[] {3, 10, 28}, 20));
 
 
-        p11724 solv = new p11724();//[BOJ] 스타일
+        p2023 solv = new p2023();//[BOJ] 스타일
         solv.main();
     }
 }
