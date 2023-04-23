@@ -1,6 +1,8 @@
 package Baekjoon.silver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class p1260 {
@@ -21,7 +23,7 @@ public class p1260 {
         A = new ArrayList[n + 1];
 
         for(int i = 1; i < n + 1; i++){
-            A[i] = new ArrayList<>(n + 1);
+            A[i] = new ArrayList<Integer>();
         }
 
         for(int i = 0; i < m; i++){
@@ -30,6 +32,11 @@ public class p1260 {
 
             A[a].add(b);// 양방향 입력
             A[b].add(a);
+        }
+
+        //번호가 작은 것 순서대로 방문해야하기 때문에 정렬해야함
+        for(int i = 1; i < n + 1; i++) {
+            Collections.sort(A[i]);
         }
 
         //구현부
@@ -43,14 +50,13 @@ public class p1260 {
             System.out.print(i + " ");
         } // DFS탐색순서 출력
 
+        //BFS실행을 위해 값 초기화
         result.clear();
+        visited = new boolean[n + 1];
 
         System.out.println(); // 줄바꿈
 
-        for(int i = 1; i < n + 1; i++){ // BFS실행
-
-        }
-
+        BFS();
     }
 
     static void DFS(int v){
@@ -63,8 +69,8 @@ public class p1260 {
 
         for(int i : A[v]) {
             if (!visited[i]) {
-                DFS(i);
                 result.add(i);
+                DFS(i);
             }
         }
 
