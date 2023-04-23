@@ -7,7 +7,7 @@ public class p1260 {
 
     static boolean[] visited;
     static ArrayList<Integer>[] A;
-
+    static ArrayList<Integer> result = new ArrayList<Integer>();
     public static void main() {
         Scanner sc = new Scanner(System.in);
 
@@ -36,6 +36,16 @@ public class p1260 {
 
 
         DFS(v);
+//        5 5 3
+//        5 4
+//        5 2
+//        1 2
+//        3 4
+//        3 1
+
+        //DFS가 이상하게 동작하는듯?
+        // result : 3 1 2 5 4가 나와야하는데
+        // output : 3 4 5 2 1이 나옴
 
         System.out.println(); // 줄바꿈
 
@@ -47,17 +57,22 @@ public class p1260 {
 
     static void DFS(int v){
         if(visited[v]){
+            result.remove(v);
             return;
         }
 
         visited[v] = true;
-        System.out.println(v);
 
         for(int i : A[v]) {
             if (!visited[i]) {
-
                 DFS(i);
+                result.add(i);
             }
+
+        }
+
+        for (int i : result) {
+            System.out.println(i);
         }
     }
 
