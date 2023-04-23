@@ -36,16 +36,14 @@ public class p1260 {
 
 
         DFS(v);
-//        5 5 3
-//        5 4
-//        5 2
-//        1 2
-//        3 4
-//        3 1
 
-        //DFS가 이상하게 동작하는듯?
-        // result : 3 1 2 5 4가 나와야하는데
-        // output : 3 4 5 2 1이 나옴
+        System.out.print(v + " ");
+
+        for (int i : result) {
+            System.out.print(i + " ");
+        } // DFS탐색순서 출력
+
+        result.clear();
 
         System.out.println(); // 줄바꿈
 
@@ -68,12 +66,8 @@ public class p1260 {
                 DFS(i);
                 result.add(i);
             }
-
         }
 
-        for (int i : result) {
-            System.out.println(i);
-        }
     }
 
     static void BFS(){
