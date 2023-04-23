@@ -73,7 +73,7 @@ public class p1260 {
 
     }
 
-    static void BFS(int v){ // 책 스타일
+    static void BFS(int v){ // 내 스타일
         Queue<Integer> queue = new LinkedList<Integer>();
         queue.add(v);
         visited[v] = true;
