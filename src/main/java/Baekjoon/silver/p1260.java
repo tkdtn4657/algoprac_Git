@@ -1,9 +1,6 @@
 package Baekjoon.silver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class p1260 {
 
@@ -56,7 +53,7 @@ public class p1260 {
 
         System.out.println(); // 줄바꿈
 
-        BFS();
+        BFS(v);
     }
 
     static void DFS(int v){
@@ -76,7 +73,20 @@ public class p1260 {
 
     }
 
-    static void BFS(){
+    static void BFS(int v){ // 책 스타일
+        Queue<Integer> queue = new LinkedList<Integer>();
+        queue.add(v);
+        visited[v] = true;
 
+        while(!queue.isEmpty()){
+            int now_Node = queue.poll();
+            System.out.print(now_Node + " ");
+            for(int i : A[now_Node]){
+                if(!visited[i]){
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+        }
     }
 }
