@@ -3,6 +3,7 @@ package org.example;
 import Baekjoon.gold.p10026;
 import Baekjoon.gold.p13023;
 import Baekjoon.gold.p2023;
+import Baekjoon.gold.p4485;
 import Baekjoon.silver.p11724;
 import Baekjoon.silver.p1260;
 import Baekjoon.silver.p2178;
@@ -15,7 +16,7 @@ public class Main {
 //        System.out.println(sol.solution(new int[] {3, 10, 28}, 20));
 
 
-        p2178 solv = new p2178();//[BOJ] 스타일
+        p4485 solv = new p4485();//[BOJ] 스타일
         solv.main();
 
 

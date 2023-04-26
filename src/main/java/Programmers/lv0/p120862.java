@@ -1,7 +1,6 @@
-package Programmers.lv1;
+package Programmers.lv0;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class p120862 {
 

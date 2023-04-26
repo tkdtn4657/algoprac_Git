@@ -1,6 +1,4 @@
-package Programmers.lv1;
-
-import java.util.Arrays;
+package Programmers.lv0;
 
 public class p120895 {//  char[] ch = my_string.toCharArray(); 활용도 좋았을듯?
     public String solution(String my_string, int num1, int num2) {

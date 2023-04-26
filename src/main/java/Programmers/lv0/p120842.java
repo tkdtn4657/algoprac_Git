@@ -1,4 +1,4 @@
-package Programmers.lv1;
+package Programmers.lv0;
 
 public class p120842 {
     public int[][] solution(int[] num_list, int n) {

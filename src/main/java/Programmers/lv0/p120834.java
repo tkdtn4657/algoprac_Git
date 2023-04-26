@@ -1,4 +1,4 @@
-package Programmers.lv1;
+package Programmers.lv0;
 
 public class p120834 {
     public String solution(int age) {

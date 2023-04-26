@@ -1,4 +1,4 @@
-package Programmers.lv1;
+package Programmers.lv0;
 
 public class p120904 {
     public int solution(int num, int k) {
