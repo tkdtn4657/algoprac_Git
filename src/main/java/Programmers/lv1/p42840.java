@@ -18,17 +18,22 @@ public class p42840 {
         highScore[1] = supoTwoResult(answerSize, answers);
         highScore[2] = supoThreeResult(answerSize, answers);
 
-        int max = 0;
+        int max = highScore[0];
 
-
-
-        if(highScore[0] > highScore[1]){
-            max = highScore[0];
-        }else{
+        if(max < highScore[1]){
             max = highScore[1];
-        }if(max < highScore[2]){
+        }
+        if(max < highScore[2]){
             max = highScore[2];
         }
+
+//        if(highScore[0] > highScore[1]){
+//            max = highScore[0];
+//        }else{
+//            max = highScore[1];
+//        }if(max < highScore[2]){
+//            max = highScore[2];
+//        }
 
         for(int i = 0; i < highScore.length; i++){
             if(highScore[i] == max) {
@@ -46,13 +51,13 @@ public class p42840 {
     }
 
     static int supoOneResult(int a, int[] answers) {
+        int[] aPattern = {1, 2, 3, 4, 5};
         int[] aArray = new int[a];
 
         int count = 0;
 
         for (int i = 0; i < a; i++) {
-            aArray[i] = i % 5 + 1;
-
+            aArray[i] = aPattern[i % aPattern.length];
             if (aArray[i] == answers[i]) {
                 count++;
             }
