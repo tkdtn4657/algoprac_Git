@@ -1,8 +1,6 @@
 package Baekjoon.silver;
 
-import javax.lang.model.type.ArrayType;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class p24444 {
 
@@ -34,13 +32,38 @@ public class p24444 {
 
         }
 
-        BFS(r);
+        for(int i = 1; i < m + 1; i++){
+            if(!a[i].isEmpty()) {
+                Collections.sort(a[i]);
+            }
+        }
+        BFS(r, m);
     }
 
-    static void BFS(int r){
+    static void BFS(int r, int m){ // r이 1이라고 가정했을 때
+        Queue<Integer> queue = new LinkedList<>();
 
+        int temp;
+        int[] count = new int[m+1];
+        int countNum = 1;
 
+        isVisit[r] = true;
+        count[r] = countNum++;
+        queue.offer(r);
+
+        while(!queue.isEmpty()){
+            temp = queue.poll();
+            for(int i = 0; i < a[temp].size(); i++) {
+                if (!isVisit[a[temp].get(i)]) {//방문하지 않았을 때 실행
+                    isVisit[a[temp].get(i)] = true;
+                    count[a[temp].get(i)] = countNum++;
+                    queue.offer(a[temp].get(i));
+                }
+            }
+        }
+
+        for(int i = 1; i < m+1; i++){
+            System.out.println(count[i]);
+        }
     }
-
-
 }
