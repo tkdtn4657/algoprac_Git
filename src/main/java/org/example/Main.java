@@ -10,7 +10,7 @@ public class Main {
 //        System.out.println(sol.solution(new int[] {1, 2, 3, 4, 5}));
 
 
-        p1991 solv = new p1991();//[BOJ] 스타일
+        p13251 solv = new p13251();//[BOJ] 스타일
         solv.main();
 
 
