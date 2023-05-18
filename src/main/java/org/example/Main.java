@@ -1,5 +1,7 @@
 package org.example;
 
+import Baekjoon.bronze.p1259;
+import Baekjoon.gold.p2293;
 import Baekjoon.silver.*;
 
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class Main {
 //        System.out.println(sol.solution(new int[] {1, 2, 3, 4, 5}));
 
 
-        p13251 solv = new p13251();//[BOJ] 스타일
+        p1259 solv = new p1259();//[BOJ] 스타일
         solv.main();
 
 
