@@ -16,46 +16,39 @@ public class p1259 {
         String right = "";
 
 
-        while(true){
+        while (true) {
             String n = br.readLine();
-            if(n.equals("0")){
+            if (n.equals("0")) {
                 break;
             }
             //중간값을 찾은 후에 기준으로 좌우를 살피기
-            center = n.length()/2;
-            if(n.length() % 2 == 0) {//길이가 짝수
+            center = n.length() / 2;
+            if (n.length() % 2 == 0) {//길이가 짝수
                 left = n.substring(0, center);
                 right = n.substring(center, n.length());
             }
-            if(n.length() % 2 != 0){//길이가 홀수
+            if (n.length() % 2 != 0) {//길이가 홀수
                 left = n.substring(0, center);
                 right = n.substring(center + 1, n.length());
             }
 
-            //1212반례
             char[] cArray = new char[right.length()];
 
             int cArrayIndex = 0;
-            for(int i = right.length()-1; i >= 0; i--){ // 문자열뒤집어서 저장
+            for (int i = right.length() - 1; i >= 0; i--) { // 문자열뒤집어서 저장
                 cArray[cArrayIndex++] = right.charAt(i);
             }
 
-            Arrays.sort(cArray);
             right = new String(cArray);
 
-            for(int i = 0; i < left.length(); i++){
-                if(left.charAt(i) != right.charAt(i)) {
-                    isPalindrome.add("no");
-                }else{
-                    isPalindrome.add("yes");
-                }
+            if (left.equals(right)) {
+                isPalindrome.add("yes");
+            } else {
+                isPalindrome.add("no");
             }
-
-            isPalindrome.add(left.equals(right) ? "yes" : "no");
-
         }
 
-        for (String yesOrNo: isPalindrome){
+        for (String yesOrNo : isPalindrome) {
             System.out.println(yesOrNo);
         }
     }
