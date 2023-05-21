@@ -5,7 +5,7 @@ import java.util.*;
 
 public class p2798{
 
-    public static void main(String[] args) throws IOException{
+    public static void main() throws IOException{
         //21이 넘으면 안됨 카드의 합을 최대한 크게
 
         //변형규칙 블랙잭
