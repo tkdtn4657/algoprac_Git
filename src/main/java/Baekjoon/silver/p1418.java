@@ -11,7 +11,7 @@ public class p1418 {
         int n = Integer.parseInt(br.readLine());
         int k = Integer.parseInt(br.readLine());
         int[] a = new int[n + 1];
-        HashMap<Integer, Integer> hs = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> hs = new HashMap<Integer, Integer>(n+1);
 
 
         for(int i = 0; i <= n; i++) {
