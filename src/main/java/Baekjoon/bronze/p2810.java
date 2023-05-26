@@ -21,7 +21,7 @@ public class p2810 {
         }
         sb.append('*');
 
-        //System.out.println(sb);
+        System.out.println(sb);
 
         int escapeCount = 0;
         int count = 0;
@@ -30,11 +30,11 @@ public class p2810 {
                 escapeCount = 0;
                 if (sb.charAt(1) == 'S') {
                     sb.delete(0, 2);
-                    //System.out.println(sb);
+                    System.out.println(sb);
                     count++;
                 } else if (sb.charAt(1) == 'L') {
                     sb.delete(0, 4);
-                    //System.out.println(sb);
+                    System.out.println(sb);
                     count += 2;
                 }
             }
@@ -52,12 +52,11 @@ public class p2810 {
     }
 }
 
-//public class p1340 {
+//public class p2810 {
 //    public static void main()throws IOException{
 //        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //        int n = Integer.parseInt(br.readLine());
 //        char[] cArray = br.readLine().toCharArray();
-//        boolean[] check = new boolean[n];
 //
 //        //*S*LL*S*
 //        //*S*S*S*
@@ -80,12 +79,12 @@ public class p2810 {
 //                count++;
 //            }
 //        }
-//        sb.append('*');
+//        sb.append('*');//여기가 문제
 //        count++;
 //
-//        if(count > n){
-//            count = n;
-//        }
+////        if(count > n){ // *S*S*S*
+////            count = n;
+////        }
 //        System.out.println(sb.toString());
 //        System.out.println(count);
 //    }
