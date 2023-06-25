@@ -17,6 +17,10 @@ public class p28256 {
         chocoCase = new char[3][3];
         StringTokenizer st;
         while(t-->0) {
+            resultList.clear();
+            al.clear();
+            check = new boolean[8];
+            flag = false;
             for (int i = 0; i < 3; i++) {
                 chocoCase[i] = br.readLine().toCharArray();
             }
@@ -64,27 +68,29 @@ public class p28256 {
                 checkChoco();
             }
             Collections.sort(resultList);
-
-            if(al.size() == resultList.size()){
-                for(int i = 0; i < al.size(); i++){
-                    if(al.get(i) != resultList.get(i)){
-                        flag = true;
-                        break;
+            if(al.size()>0 && resultList.size() > 0) {
+                if (al.size() == resultList.size()) {
+                    for (int i = 0; i < al.size(); i++) {
+                        if (al.get(i) != resultList.get(i)) {
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                if(!flag) {
-                    System.out.println(1);
-                }else{
+                    if (!flag) {
+                        System.out.println(1);
+                    } else {
+                        System.out.println(0);
+                    }
+                } else {
                     System.out.println(0);
                 }
             }else{
                 System.out.println(0);
             }
-
-            resultList.clear();
-            al.clear();
-            check = new boolean[8];
-            flag = false;
+//            resultList.clear();
+//            al.clear();
+//            check = new boolean[8];
+//            flag = false;
         }
 
     }
@@ -94,16 +100,16 @@ public class p28256 {
         boolean recentbool = check[0];
 
         for(int i = 1; i < check.length+1; i++){
-            if(recentbool != check[i%check.length] && check[i%check.length] == true) {
+            if(recentbool != check[i%8] && check[i%8] == true) {
                 index = i;
                 break;
             }else {
-                recentbool = check[i%check.length];
+                recentbool = check[i%8];
             }
         }
         //2부터 시작
-        recentbool = check[index];
-        for(int i = (index+1)%8, each = 0; each < check.length; each++, i++){
+        recentbool = check[index%8];
+        for(int i = (index+1)%8, each = 0; each < 8; each++, i++){
             if(recentbool == check[i%8] && check[i%8] == true){
                 count++;
                 recentbool = check[i%8];
