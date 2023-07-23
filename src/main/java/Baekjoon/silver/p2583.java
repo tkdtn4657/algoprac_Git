@@ -6,6 +6,8 @@ import java.util.*;
 public class p2583 {
 
     static boolean map[][];
+    static final int dx[] = {0,0,1,-1};
+    static final int dy[] = {1,-1,0,0};
     static int count = 0;
 
     static int n, m, k;
@@ -54,10 +56,13 @@ public class p2583 {
             if (!map[x][y]) {
                 map[x][y] = true;
                 rectangleSize++;
-                dfs(x + 1, y);
-                dfs(x - 1, y);
-                dfs(x, y + 1);
-                dfs(x, y - 1);
+                for(int i = 0; i<4; i++){
+                    dfs(x + dx[i], y+dy[i]);
+                }
+//                dfs(x + 1, y);
+//                dfs(x - 1, y);
+//                dfs(x, y + 1);
+//                dfs(x, y - 1);
             }
         }
     }
