@@ -1,9 +1,9 @@
-package Baekjoon.Compatition;
+package Baekjoon.silver;
 
 import java.io.*;
 import java.util.*;
 
-public class p1065_8 {
+public class p28438 {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");

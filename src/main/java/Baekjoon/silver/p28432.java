@@ -1,9 +1,9 @@
-package Baekjoon.Compatition;
+package Baekjoon.silver;
 
 import java.io.*;
 import java.util.*;
 
-public class p1065_2 {
+public class p28432 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
