@@ -1,46 +1,41 @@
 package Baekjoon.silver;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class p13251 {
+    public static void main(String[] args) throws IOException{
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main() {
+        int m = Integer.parseInt(br.readLine());
+        double[] a = new double[m];
 
-
-        Scanner sc = new Scanner(System.in);
-
-        int m = sc.nextInt();// 종류
-
-        int[] stoneType = new int[m];
-
-        for(int i = 0; i < m; i++) {
-            stoneType[i] = sc.nextInt(); // 각 종류별 개수
+        double totalStone = 0;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < m; i++){
+            a[i] = Integer.parseInt(st.nextToken());
+            totalStone += a[i];
         }
 
-        int k = sc.nextInt(); // 돌 뽑는 개수
-        float temp;
-//    2
-//    5 7
-//    1
-        ArrayList<Float> a = new ArrayList<Float>();
-        int[] stone = new int[m];
+        int k = Integer.parseInt(br.readLine());
 
-
-        for (int j = 0; j < m; j++) {
-            temp = (float)k / (float) stoneType[j];
-            if(temp >= 1){
-                temp = 1;
+        double[] percent = new double[m];
+        Arrays.fill(percent, 1);
+        //k번 뽑을 때 확률
+        for(int i = 0; i < k; i++){
+            for(int j = 0; j < a.length; j++){
+                percent[j] *= a[j]--/totalStone;
             }
-            a.add(temp);
+            totalStone--;
         }
 
-        float result = 1;
-
-        for (int i = 0; i < a.size(); i++){
-            result *= a.get(i);
+        double percentSum = 0;
+        for(double value : percent){
+            percentSum += value;
         }
 
-        System.out.println(result);
+        System.out.println(percentSum);
+
+
     }
 }
