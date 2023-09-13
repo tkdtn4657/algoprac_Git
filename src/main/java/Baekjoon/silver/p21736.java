@@ -10,7 +10,7 @@ import java.util.*;
  * 3. P를 발견했을 때 Count를 올린다
  * 4. I의 위치를 기준으로 DFS탐색을 마치면 Count를 출력하고 프로그램 종료
  */
-public class p1347 {
+public class p21736 {
     static int[][] move = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     static boolean[][] visited;
     static char[][] map;
