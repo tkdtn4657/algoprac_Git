@@ -8,7 +8,7 @@ public class p11726 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[n+1];
+        int[] dp = new int[n+2];
 
         //2x1의 타일은 하나만가능
         dp[1] = 1;
