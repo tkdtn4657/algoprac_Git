@@ -6,7 +6,7 @@ import java.util.*;
 public class p2579_2 {
 
     static int[] stairs;
-    static int[] dp;
+    static Integer[] dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,7 +14,7 @@ public class p2579_2 {
         int n = Integer.parseInt(br.readLine());
 
         stairs = new int[n + 1];
-        dp = new int[n + 1];
+        dp = new Integer[n + 1];
 
         for (int i = 1; i < n + 1; i++) {
             stairs[i] = Integer.parseInt(br.readLine());
@@ -25,8 +25,6 @@ public class p2579_2 {
             return;
         }
 
-        Arrays.fill(dp, -1);
-
         dp[1] = stairs[1];
         dp[2] = stairs[1] + stairs[2];
 
@@ -36,7 +34,7 @@ public class p2579_2 {
     }
 
     static int topDown(int n) {
-        if (dp[n] != -1) {
+        if (dp[n] != null) {
             return dp[n];
         }
         if (n >= 3) {
