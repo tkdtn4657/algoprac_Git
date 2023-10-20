@@ -7,7 +7,7 @@ public class p17359 {
 
     static boolean[] check;
     static ArrayList<String> al;
-    //    static ArrayList<String> stringCase = new ArrayList<>();
+    static ArrayList<Integer> stringStatusCount = new ArrayList<>();
     static int minCount = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
@@ -18,50 +18,56 @@ public class p17359 {
         al = new ArrayList<>();
         check = new boolean[n];
 
+        int count;
+        char prevChar, nowChar;
         for (int i = 0; i < n; i++) {
-            al.add(br.readLine());
+            String s = br.readLine();
+            al.add(s);
+            count = 0;
+            prevChar = s.charAt(0);
+            for (int j = 1; j < s.length(); j++) {
+                nowChar = s.charAt(j);
+                if (prevChar != s.charAt(j)) {
+                    count++;
+                }
+                prevChar = nowChar;
+            }
+            stringStatusCount.add(count);
         }
 
-        recursion(0, al.size(), "");
-
-
-//        for (String s : stringCase) {
-//            minCount = Integer.min(minCount, statusCount(s));
-//        }
+        recursion(al.size(), -1, 0);
 
         System.out.println(minCount);
 
     }
 
-    static void recursion(int num, int cnt, String s) {
+    static void recursion(int cnt, int stringIndex, int statusCount) {
         if (cnt == 0) {
-            minCount = Integer.min(statusCount(s), minCount);
+            minCount = Integer.min(statusCount, minCount);
             return;
         }
 
-        if (!check[num]) {
-            for (int i = 0; i < al.size(); i++) {
-                check[num] = true;
-                recursion(i, cnt - 1, s + al.get(i));
-                check[num] = false;
+        for (int i = 0; i < al.size(); i++) {
+            if (!check[i]) {
+                check[i] = true;
+                if (stringIndex == -1) {
+                    recursion(cnt - 1, i, statusCount + statusCounter( "", al.get(i)) + stringStatusCount.get(i));
+                } else {
+                    recursion(cnt - 1, i, statusCount + statusCounter( al.get(stringIndex), al.get(i)) + stringStatusCount.get(i));
+                }
+                check[i] = false;
             }
         }
-
     }
 
-    static int statusCount(String s) {
-//        System.out.println(s);
-        int count = 0;
-        char prevChar = s.charAt(0);
-        char nowChar;
-        for (int i = 1; i < s.length(); i++) {
-            nowChar = s.charAt(i);
-            if (prevChar != s.charAt(i)) {
-                count++;
+    static int statusCounter(String s1, String s2) {
+        if (s1.length() == 0) {
+            return 0;
+        } else {
+            if (s1.charAt(s1.length() - 1) != s2.charAt(0)) {
+                return 1;
             }
-            prevChar = nowChar;
         }
-//        System.out.println(count);
-        return count;
+        return 0;
     }
 }
