@@ -18,15 +18,15 @@ public class p9012 {
 
             for(int j = 0; j < s.length(); j++){
                 switch (s.charAt(j)){
-                    case '(':
-                        stack.push('(');
-                        break;
-                    case')':
-                        if(!stack.isEmpty()){
+                    case '(' -> stack.push('(');
+
+                    case')' -> {
+                        if (!stack.isEmpty()) {
                             stack.pop();
-                        }else{
+                        } else {
                             flag = false;
                         }
+                    }
                 }
             }
             if(!stack.isEmpty() || !flag){
