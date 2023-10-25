@@ -38,12 +38,7 @@ public class p15728 {
         }
 
         List<Integer> valueList = new ArrayList<>(hs.values());
-        valueList.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
-            }
-        });
+        valueList.sort((o1, o2) -> o2 - o1);
 
         System.out.println(valueList.get(k));
     }
