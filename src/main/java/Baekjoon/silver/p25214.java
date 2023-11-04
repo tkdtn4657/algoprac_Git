@@ -48,16 +48,17 @@ public class p25214 {
         }
 
         dp[0] = 0;
-        int min = 0;
 
         for(int i = 1; i < n; i++){
             dp[i] = Integer.max(dp[i-1], a[i] - minArray[i-1]);
         }
 
+        StringBuilder sb = new StringBuilder();
         for(int num : dp){
-            System.out.print( num + " ");
+            sb.append(num).append(" ");
         }
 
+        System.out.println(sb);
     }
 
 }
