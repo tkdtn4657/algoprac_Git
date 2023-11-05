@@ -36,7 +36,8 @@ public class p10157 {
         //x y
         //1
         if (k == 1) {
-            System.out.println(1);
+            System.out.println(1 + " " + 1);
+            return;
         }
         visited[0][0] = true;
 
