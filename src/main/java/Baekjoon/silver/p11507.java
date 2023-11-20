@@ -4,8 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class p11507 {
-    static boolean[][] cardset = new boolean[4][14];
-
+    static int[] cardIndexCount = new int[4];
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -13,8 +12,6 @@ public class p11507 {
         String s = br.readLine();
 
         String[] cards = threeLengthSplit(s);
-
-        List<String> as = new ArrayList<>();
 
         int dupleCheckSize = Arrays.stream(cards).distinct().toArray().length;
 
@@ -27,36 +24,28 @@ public class p11507 {
         for(String card : cards){
             switch (card.charAt(0)){
                 case 'P' -> {
-                    checkCard(card.substring(1), 0);
+                    cardIndexCount[0]++;
                 }
 
                 case 'K' -> {
-                    checkCard(card.substring(1), 1);
+                    cardIndexCount[1]++;
                 }
 
                 case 'H' -> {
-                    checkCard(card.substring(1), 2);
+                    cardIndexCount[2]++;
                 }
 
                 case 'T' -> {
-                    checkCard(card.substring(1), 3);
+                    cardIndexCount[3]++;
                 }
             }
         }
 
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < cardset.length; i++){
-            int count = 0;
-            for(int j = 0; j < cardset[i].length; j++){
-                if(cardset[i][j]) {
-                    count++;
-                }
-            }
-            sb.append(13-count).append(" ");
+        for(int num : cardIndexCount){
+            sb.append(13-num).append(" ");
         }
-
-        sb.setLength(sb.length()-1);
 
         System.out.println(sb);
 
@@ -70,8 +59,5 @@ public class p11507 {
         }
 
         return a;
-    }
-    public static void checkCard(String cardNum, int index){
-        cardset[index][Integer.parseInt(cardNum)] = true;
     }
 }
