@@ -12,27 +12,25 @@ public class p11497 {
         while (t-- > 0) {
             int maxLevel = -1;
             int n = Integer.parseInt(br.readLine());
-
+            PriorityQueue<Integer> pq = new PriorityQueue<>();
             StringTokenizer st = new StringTokenizer(br.readLine());
             int[] a = new int[n];
             for (int i = 0; i < n; i++) {
-                a[i] = Integer.parseInt(st.nextToken());
+                pq.add(Integer.parseInt(st.nextToken()));
             }
-            Arrays.sort(a);
 
-            int index = a.length - 1;
             int count = 1;
             //양수 : true, 음수 : false
             boolean flag = true;
             final int middle = (a.length - 1) / 2;
             int[] temp = new int[a.length];
-            temp[middle] = a[index--];
-            while (index > -1) {
+            temp[middle] = pq.poll();
+            while (!pq.isEmpty()) {
                 if (flag) {
-                    temp[middle + count] = a[index--];
+                    temp[middle + count] = pq.poll();
                     flag = false;
                 } else {
-                    temp[middle - count] = a[index--];
+                    temp[middle - count] = pq.poll();
                     flag = true;
                     count++;
                 }
