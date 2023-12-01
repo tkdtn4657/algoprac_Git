@@ -15,61 +15,60 @@ public class p29812 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int d = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        ArrayList<Map<Integer, int[]>> removeRange = new ArrayList<>();
 
         Queue<Integer> noHYUList = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            if (!isHYU(sb.charAt(i))){
+            if (!isHYU(sb.charAt(i))) {
                 noHYUList.add(i);
             }
         }
 
         boolean flag;
 
-        while(!noHYUList.isEmpty()){
+        while (!noHYUList.isEmpty()) {
             flag = false;
             final int firstIndex = noHYUList.poll();
             int prevIndex = firstIndex;
             int count = 1;
 
-            while(!noHYUList.isEmpty()){
+            while (!noHYUList.isEmpty()) {
                 int isContinuousIndex = noHYUList.peek();
-                if(isContinuousIndex-prevIndex == 1){
+                if (isContinuousIndex - prevIndex == 1) {
                     prevIndex = noHYUList.poll();
                     flag = true;
                     count++;
-                }else {
+                } else {
                     break;
                 }
             }
-            if(!flag || count * d < m+d){
-                energy+= d*count;
-            }else{
+            if (!flag || count * d < m + d) {
+                energy += d * count;
+            } else {
                 energy += d + m;
             }
         }
 
-        Map<Integer, List<Integer>> result = sb.toString().chars()
-                .boxed()
+        Map<HYU, Long> result = sb.toString().chars()
                 .filter(c -> isHYU(c))
-                .collect(Collectors.groupingBy(c -> c));
+                .boxed()
+                .collect(Collectors.groupingBy((Integer c) -> HYU.valueOf(changeHYU(c)), Collectors.counting()));
 
         int min = Integer.MAX_VALUE;
-        for(int num : result.keySet()){
-            min = Integer.min(result.get(num).size(), min);
+        for (Object num : result.keySet()) {
+            min = Integer.min(Math.toIntExact(result.get(num)), min);
         }
 
         sb = new StringBuilder();
-        if(energy == 0){
+        if (energy == 0) {
             sb.append("Nalmeok");
-        }else{
+        } else {
             sb.append(energy);
         }
         sb.append(System.lineSeparator());
-        if(min == 1 || Integer.MAX_VALUE == min){
+        if (min == 1 || Integer.MAX_VALUE == min) {
             sb.append("I love HanYang University");
-        }else{
-            sb.append(min-1);
+        } else {
+            sb.append(min - 1);
         }
         System.out.println(sb);
 
@@ -82,5 +81,15 @@ public class p29812 {
             default:
                 return false;
         }
+    }
+
+    static String changeHYU(int c) {
+        return String.valueOf((char) c);
+    }
+
+    private enum HYU {
+        H,
+        Y,
+        U
     }
 }
