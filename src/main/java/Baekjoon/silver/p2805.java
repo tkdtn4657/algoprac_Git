@@ -42,9 +42,9 @@ public class p2805 {
         }
 
         int left = 1;
-        int height = 0;
+        long height = 0;
         while(left <= right){
-            int count = 0;
+            long count = 0;
             int center = (left + right) / 2;
             //나무 윗동을 center값 기준으로 자르기
             for(int i = 0; i < n;i++){
