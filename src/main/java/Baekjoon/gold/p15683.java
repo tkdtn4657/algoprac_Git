@@ -18,17 +18,11 @@ public class p15683 {
         m = Integer.parseInt(st.nextToken());
 
         int[][] map = new int[n][m];
-
+        ArrayList<ModeCCTV> cctvList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < m; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
-
-        ArrayList<ModeCCTV> cctvList = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
                 if (map[i][j] != 0 && map[i][j] != 6) {
                     cctvList.add(new ModeCCTV(map[i][j], new int[]{i, j}));
                 }
