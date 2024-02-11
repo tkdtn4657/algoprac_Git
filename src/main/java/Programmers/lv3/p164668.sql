@@ -1,0 +1,10 @@
+-- 조건에 맞는 사용자와 총 거래금액 조회하기 (join, group by)
+
+SELECT b.USER_ID, b.NICKNAME, SUM(PRICE) as TOTAL_SALES
+FROM USED_GOODS_BOARD as a
+         JOIN USED_GOODS_USER as b
+              ON a.WRITER_ID = b.USER_ID
+WHERE a.STATUS = 'DONE'
+GROUP BY b.USER_ID
+HAVING SUM(a.PRICE) >= 700000
+ORDER BY TOTAL_SALES ASC;
