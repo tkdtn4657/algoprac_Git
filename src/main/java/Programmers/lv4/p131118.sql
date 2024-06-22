@@ -1,0 +1,15 @@
+-- 서울에 위치한 식당 목록 출력하기
+
+-- SELECT a.REST_ID, a.REST_NAME, a.FOOD_TYPE, a.FAVORITES, a.ADDRESS, round(avg(b.REVIEW_SCORE), 2) as SCORE
+--       from REST_INFO as a
+--       left outer join REST_REVIEW as b
+-- on a.REST_ID = b.REST_ID
+--       where a.ADDRESS like '%서울%'
+--       order by SCORE DESC, a.FAVORITES DESC
+
+SELECT a.REST_ID, b.REST_NAME, b.FOOD_TYPE, b.FAVORITES, b.ADDRESS, ROUND(AVG(a.REVIEW_SCORE),2) AS SCORE
+FROM REST_REVIEW a
+         JOIN REST_INFO b ON a.REST_ID = b.REST_ID
+GROUP BY a.REST_ID
+HAVING b.ADDRESS LIKE '서울%'
+ORDER BY SCORE DESC, b.FAVORITES DESC
