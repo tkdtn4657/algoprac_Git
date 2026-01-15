@@ -5,6 +5,7 @@ import java.util.*;
 
 public class p1967 {
     static int maxLength = 0;
+    static int maxLengthNode = 0;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -30,9 +31,8 @@ public class p1967 {
         //각 노드별로 전체탐색을 돌리기
         //10000 * 10000 이니까 1억 => 1초근처? 메모리는 128MB이지만, 10000번까지만 dfs를 돌아서 괜찮을듯
 
-        for(int i = 1; i <= n; i++){
-            dfs(i, -1, tree, 0);
-        }
+        dfs(1, -1, tree, 0);
+        dfs(maxLengthNode, -1, tree, 0);
 
         System.out.println(maxLength);
 
@@ -41,7 +41,10 @@ public class p1967 {
     private static void dfs(int cur, int parent, List<List<Edge>> tree, int length){
         List<Edge> nowEdges = tree.get(cur);
 
-        maxLength = Integer.max(maxLength, length);
+        if(maxLength < length){
+            maxLengthNode = cur;
+            maxLength = length;
+        }
 
         for(Edge edge : nowEdges){
             if(edge.next == parent) continue;
