@@ -2,174 +2,178 @@ package Baekjoon.gold;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class p17825 {
 
-    //41보다 크면 도착
-    static final int ARRIVED_NODE_NUMBER = 41;
-    static final int START_NODE_NUMBER = 0;
-    static List<Field> map = new ArrayList<>();
-    static int[] diceArray = new int[10];
-    static List<Horse> horseList = new ArrayList<>();
+    static final int ARRIVED_HORSE = Integer.MIN_VALUE;
+    static final int[] dices = new int[10];
     static int maxScore = 0;
-    static int parent = 0;
+    static List<Field> fields = initMap();
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        //주사위 수 10개를 입력받아서 백트래킹으로 모든 경우의 수를 탐색.
-        //점수는 이동을 마칠 때마다 칸에 적혀있는 수가 점수에 추가
-
-        //말 4개를 시뮬레이션 해서 주사위 10개를 다 돌려보는 문제
-
-        //1. 노드를 단방향으로 추가
-        //2. 출발 노드와 도착 노드는 각각 MAX,MIN value
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         for(int i = 0; i < 10; i++){
-            diceArray[i] = Integer.parseInt(st.nextToken());
+            dices[i] = Integer.parseInt(st.nextToken());
         }
 
-        for(int i = 0; i < 4; i++){
-            horseList.add(new Horse(0, false));
-        }
+        List<Horse> horseList = List.of(
+                new Horse(0, false),
+                new Horse(0, false),
+                new Horse(0, false),
+                new Horse(0, false)
+        );
 
-        setGame(map);
-
-        horseMove(0, horseList, 0, 0);
-        horseMove(0, horseList, 1, 0);
-        horseMove(0, horseList, 2, 0);
-        horseMove(0, horseList, 3, 0);
+        playGame(0, 0, horseList);
 
         System.out.println(maxScore);
 
     }
 
-    private static void horseMove(int diceIndex, List<Horse> horseList, int pickedHorse, int score){
-        if(diceIndex >= 10) {
-            maxScore = Integer.max(score, maxScore);
+    private static void playGame(int diceIndex, int sumScore, List<Horse> horseList) {
+        if(diceIndex == 10){
+            maxScore = Integer.max(sumScore, maxScore);
             return;
         }
-        Horse nowHorse = horseList.get(pickedHorse);
 
-        int nodeNumber;
-        if(map.get(nowHorse.nowNumber).isBranch()){
-            nodeNumber = moveNode(diceArray[diceIndex], nowHorse.nowNumber, true, nowHorse.nowNumber);
-        } else {
-            nodeNumber = moveNode(diceArray[diceIndex], nowHorse.nowNumber, false, nowHorse.nowNumber);
-        }
+        for(int i = 0; i < horseList.size(); i++){
+            if(horseList.get(i).nowField == ARRIVED_HORSE) continue;
+            List<Horse> copiedHorseList = Horse.deepCopyHorses(horseList);
+            //이 때 horse의 위치가 변경됨
+            int score = moveHorse(copiedHorseList.get(i), dices[diceIndex]);
 
-
-        for(int i = 0; i < 4; i++){
-            if(pickedHorse == i) continue;
-            if(nodeNumber == horseList.get(pickedHorse).nowNumber) return;
-        }
-
-        if(nodeNumber >= ARRIVED_NODE_NUMBER) {
-            nowHorse.arrivedFlag = true;
-        } else {
-            nowHorse.nowNumber = nodeNumber;
-            score += nodeNumber;
-        }
-
-        List<Horse> copiedHorseList = Horse.deepCopyHorseList(horseList);
-        for(int horseNumber = 0; horseNumber < 4; horseNumber++){
-            if(copiedHorseList.get(horseNumber).horseIsArrived()) continue;
-            horseMove(diceIndex + 1, copiedHorseList, horseNumber, score);
-        }
-
-    }
-
-    private static int moveNode(int remainMoveCount, int nextNode, boolean branchFlag){
-        if(nextNode == 42) return 42;
-
-
-        if(branchFlag){
-            return moveNode(remainMoveCount-1, map.get(nextNode).nextNumbers.get(1), false);
-        } else {
-            if(remainMoveCount == 1) {
-                if(map.get(nextNode).isBranch()){
-                    return map.get(nextNode).nextNumbers.get(1);
-                } else {
-                    return map.get(nextNode).nextNumbers.get(0);
+            boolean rollBackFlag = false;
+            for(int j = 0; j < 4; j++){
+                if(i == j) continue;
+                if(copiedHorseList.get(i).nowField == copiedHorseList.get(j).nowField){
+                    if(copiedHorseList.get(i).nowField == ARRIVED_HORSE){
+                        continue;
+                    }
+                    rollBackFlag = true;
                 }
             }
-        }
-        return moveNode(remainMoveCount-1, map.get(nextNode).nextNumbers.get(0), false);
-    }
 
-    private static class Field {
-        Queue<Horse> horses = new ArrayDeque<>();
-        List<Integer> nextNumbers = new ArrayList<>();
+            if(rollBackFlag){
+                continue;
+            }
 
-        public Field() {}
-        public boolean fieldIsEmpty(Horse horse){
-            return this.horses.isEmpty();
-        }
-
-        public boolean isBranch(){
-            return this.nextNumbers.size() > 1;
+            playGame(diceIndex+1, sumScore + score, copiedHorseList);
         }
 
     }
 
-    private static class Horse {
-        int nowNumber;
-        boolean arrivedFlag;
+    //말이 이동 후 도착지점의 점수 반환
+    private static int moveHorse(Horse horse, int moveCount){
+        int nowField = horse.nowField;
+        Field field = fields.get(nowField);
 
-        Horse(int number, boolean flag){
-            this.nowNumber = number;
-            this.arrivedFlag = flag;
+        if(field.index == 32){
+            horse.nowField = ARRIVED_HORSE;
+            return 0;
         }
 
-        public boolean horseIsArrived(){
-            return arrivedFlag;
+        if(moveCount == 0){
+
+            if(fields.get(nowField).nextFields.size() >= 2){
+                horse.branchFlag = true;
+            }
+
+            return field.score;
+
+        } else {
+
+            if(horse.branchFlag){
+                horse.nowField = field.nextFields.get(1).index;
+                horse.branchFlag = false;
+            } else {
+                horse.nowField = field.nextFields.get(0).index;
+            }
+
+            return moveHorse(horse, moveCount-1);
+        }
+    }
+
+    private static class Horse{
+        int nowField;
+        boolean branchFlag;
+
+        public Horse(int nowField, boolean branchFlag) {
+            this.nowField = nowField;
+            this.branchFlag = branchFlag;
         }
 
-        public static List<Horse> deepCopyHorseList(List<Horse> horseList){
+        public static List<Horse> deepCopyHorses(List<Horse> horseList){
             return horseList.stream()
-                    .map(horse -> new Horse(horse.nowNumber, horse.arrivedFlag))
-                    .toList();
+                    .map(horse -> new Horse(horse.nowField, horse.branchFlag))
+                    .collect(Collectors.toList());
         }
 
-        @Override
-        public boolean equals(Object o1) {
-            Horse horse = (Horse) o1;
-            return this.nowNumber == horse.nowNumber;
+    }
+
+    private static class Field{
+
+        List<Field> nextFields = new ArrayList<>();
+        int score;
+        int index;
+
+        public Field(int score, int index) {
+            this.score = score;
+            this.index = index;
         }
     }
 
-    private static void setGame(List<Field> map){
-        //시작노드와 출발노드를 포함해 모든 노드는 33개
-        //하지만 인덱스로 노드위치를 매핑하기 위해 총 42개의 노드 생성
-        final int totalNode = 42;
-        for(int i = 0; i < totalNode; i++){
-            map.add(new Field());
+    private static List<Field> initMap(){
+        List<Field> fields = new ArrayList<>();
+        for(int i = 0; i <= 20; i++){
+            fields.add(new Field(i*2, i));
         }
 
-        //겉면 초기화 (2점씩)
-        for(int i = 0; i <= 40; i+=2){
-            map.get(i).nextNumbers.add(i+2);
+        //겉면 세팅
+        for(int i = 0; i < 20; i++){
+            fields.get(i).nextFields.add(fields.get(i+1));
         }
-        
-        //분기 처리 (10, 20, 30)
-        map.get(10).nextNumbers.add(13);
-        map.get(20).nextNumbers.add(22);
-        map.get(30).nextNumbers.add(28);
 
-        //중앙 필드 next처리
-        map.get(13).nextNumbers.add(16);
-        map.get(16).nextNumbers.add(19);
-        map.get(19).nextNumbers.add(25);
+        //내부 추가
+        fields.add(new Field(13, 21)); //21
+        fields.add(new Field(16, 22)); //22
+        fields.add(new Field(19, 23)); //23
+        fields.add(new Field(25, 24)); //24
+        fields.add(new Field(26, 25)); //25
+        fields.add(new Field(27, 26)); //26
+        fields.add(new Field(28, 27)); //27
+        fields.add(new Field(22, 28)); //28
+        fields.add(new Field(24, 29)); //29
+        fields.add(new Field(30, 30)); //30
+        fields.add(new Field(35, 31)); //31
 
-        map.get(22).nextNumbers.add(24);
-        map.get(24).nextNumbers.add(25);
+        //브랜치 갈라지는 곳
+        //10 -> 13 -> 16 -> 19 -> 25
+        fields.get(5).nextFields.add(fields.get(21));
+        fields.get(21).nextFields.add(fields.get(22));
+        fields.get(22).nextFields.add(fields.get(23));
+        fields.get(23).nextFields.add(fields.get(24));
 
-        map.get(28).nextNumbers.add(27);
-        map.get(27).nextNumbers.add(26);
-        map.get(26).nextNumbers.add(25);
+        //20 -> 22 -> 24 -> 25 -> 30 -> 35 -> 40
+        fields.get(10).nextFields.add(fields.get(28));
+        fields.get(28).nextFields.add(fields.get(29));
+        fields.get(29).nextFields.add(fields.get(24));
+        fields.get(24).nextFields.add(fields.get(30));
+        fields.get(30).nextFields.add(fields.get(31));
+        fields.get(31).nextFields.add(fields.get(20));
 
-        map.get(25).nextNumbers.add(30);
-        map.get(30).nextNumbers.add(35);
-        map.get(35).nextNumbers.add(40);
+        //30 -> 28 -> 27 -> 26 -> 25
+        fields.get(15).nextFields.add(fields.get(27));
+        fields.get(27).nextFields.add(fields.get(26));
+        fields.get(26).nextFields.add(fields.get(25));
+        fields.get(25).nextFields.add(fields.get(24));
+
+        //종료필드 추가
+        fields.add(new Field(ARRIVED_HORSE, 32));
+        fields.get(20).nextFields.add(fields.get(32));
+
+        return fields;
     }
 }
