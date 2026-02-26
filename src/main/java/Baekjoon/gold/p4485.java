@@ -1,68 +1,65 @@
 package Baekjoon.gold;
 
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class p4485 {
-    private static int N;
-    private static int[][] map;
-    private static int[][] distances;
-    private static int INF = Integer.MAX_VALUE;
-    private static int[] dr = {-1, 0, 1, 0};
-    private static int[] dc = {0, -1, 0, 1};
 
-    public static void main() {
-        Scanner sc = new Scanner(System.in);
-        int testCnt = 0;
-        while (true) {
-            N = sc.nextInt();
-            if(N==0) return;
-            map = new int[N][N];
-            distances = new int[N][N];
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    map[i][j] = sc.nextInt();
-                    distances[i][j] = INF;
+    static int[][] moves = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringBuilder sb = new StringBuilder();
+        int n = Integer.parseInt(br.readLine());
+        int count = 1;
+        while(n != 0){
+
+            Node[][] map = new Node[n][n];
+            for(int i = 0; i < n; i++){
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                for(int j = 0; j < n; j++){
+                    map[i][j] = new Node(Integer.parseInt(st.nextToken()), Integer.MAX_VALUE);
                 }
             }
-            System.out.println("Problem " + (++testCnt) + ": " + BFS());
-        }
-    }
 
-    static int BFS() {
-        PriorityQueue<Point> queue = new PriorityQueue<>();
-        queue.add(new Point(0, 0, map[0][0]));
-        distances[0][0] = map[0][0];
-        while (!queue.isEmpty()) {
-            Point point = queue.poll();
-            int r = point.r;
-            int c = point.c;
-            for (int i = 0; i < 4; i++) {
-                int r2 = r + dr[i];
-                int c2 = c + dc[i];
-                if (r2 >= 0 && c2 >= 0 && r2 < N && c2 < N && (distances[r2][c2] > distances[r][c] + map[r2][c2])) { // 해당 지점까지의 최소거리라면 갱신
-                    distances[r2][c2] = distances[r][c] + map[r2][c2];
-                    queue.add(new Point(r2, c2, distances[r2][c2]));
+            map[0][0].distance = map[0][0].weight;
+
+            PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o1 -> o1[2]));
+            pq.add(new int[]{0, 0, map[0][0].weight});
+
+            while(!pq.isEmpty()){
+                int[] now = pq.poll();
+                if(now[2] > map[now[0]][now[1]].distance) continue;
+
+                for(int[] move : moves){
+                    int dx = now[0] + move[0];
+                    int dy = now[1] + move[1];
+
+                    if(dx < 0 || dy < 0 || dx >= n || dy >= n) continue;
+                    if(map[dx][dy].distance <= now[2] + map[dx][dy].weight) continue;
+                    map[dx][dy].distance = now[2] + map[dx][dy].weight;
+                    pq.add(new int[]{dx, dy, map[dx][dy].distance});
                 }
+
             }
+
+            sb.append("Problem ").append(count++).append(": ").append(map[n - 1][n - 1].distance).append(System.lineSeparator());
+            n = Integer.parseInt(br.readLine());
         }
-        return distances[N - 1][N - 1];
+
+        sb.setLength(sb.length()-1);
+        System.out.println(sb);
+
     }
 
-    static class Point implements Comparable<Point>{
-        int r;
-        int c;
-        int cost;
+    private static class Node{
+        int weight;
+        int distance;
 
-        public Point(int r, int c, int cost) {
-            this.r = r;
-            this.c = c;
-            this.cost = cost;
-        }
-
-        @Override
-        public int compareTo(Point o) {
-            return cost - o.cost;
+        public Node(int weight, int distance) {
+            this.weight = weight;
+            this.distance = distance;
         }
     }
 }
